@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alexander Eggers — Mobile Tech Lead</title>
+<meta name="description" content="Melbourne-based Mobile Tech Lead — 10 years across native Android, iOS, Kotlin Multiplatform and React Native. Privacy, fintech, hardware.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230D1014'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23F5C451'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%23F5C451' stroke-opacity='0.35' stroke-width='1.5'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0D1014;
+    --bg-2:#12161C;
+    --panel:#151A21;
+    --line:#262D37;
+    --line-soft:#1B222B;
+    --text:#E9EEF4;
+    --muted:#8A97A6;
+    --faint:#5C6773;
+    --accent:#F5C451;
+    --accent-warm:#F2A93B;
+    --font-display:'Space Grotesk','IBM Plex Sans',system-ui,sans-serif;
+    --font-body:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    --font-mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+    --wrap:1120px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  body::before{
+    /* faint instrument grid */
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background:
+      linear-gradient(var(--line-soft) 1px,transparent 1px),
+      linear-gradient(90deg,var(--line-soft) 1px,transparent 1px);
+    background-size:64px 64px;
+    opacity:.35;
+    mask-image:radial-gradient(circle at 50% 20%,#000 0%,transparent 75%);
+    -webkit-mask-image:radial-gradient(circle at 50% 20%,#000 0%,transparent 75%);
+    z-index:0;
+  }
+  a{color:inherit;}
+  .wrap{max-width:var(--wrap);margin:0 auto;padding:0 clamp(20px,5vw,48px);position:relative;z-index:1;}
+
+  .mono{font-family:var(--font-mono);}
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:.72rem;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin:0 0 1.1rem;
+    display:flex;
+    align-items:center;
+    gap:.7em;
+  }
+  .eyebrow::before{
+    content:"";
+    width:26px;height:1px;
+    background:var(--accent);
+    display:inline-block;
+    opacity:.7;
+  }
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(13,16,20,.82);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar .wrap{
+    display:flex;align-items:center;justify-content:space-between;
+    height:60px;
+  }
+  .brand{
+    font-family:var(--font-mono);
+    font-size:.82rem;
+    letter-spacing:.04em;
+    color:var(--text);
+    display:flex;align-items:center;gap:.6em;
+    text-decoration:none;
+  }
+  .brand .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);}
+  .brand span{color:var(--faint);}
+  .navlinks{display:flex;gap:.4rem;}
+  .navlinks a{
+    font-family:var(--font-mono);
+    font-size:.74rem;letter-spacing:.06em;
+    text-transform:uppercase;
+    text-decoration:none;color:var(--muted);
+    padding:.45rem .7rem;border-radius:6px;
+    transition:color .18s,background .18s;
+  }
+  .navlinks a:hover{color:var(--text);background:var(--bg-2);}
+  @media(max-width:560px){.navlinks a.hide-sm{display:none;}}
+
+  /* ---------- hero ---------- */
+  .hero{padding:clamp(56px,11vw,120px) 0 clamp(40px,7vw,72px);}
+  .hero h1{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:clamp(2.7rem,7.4vw,5.4rem);
+    line-height:1.0;
+    letter-spacing:-.02em;
+    margin:0 0 1.5rem;
+    max-width:15ch;
+  }
+  .hero h1 .accent{color:var(--accent);}
+  .lede{
+    font-size:clamp(1.05rem,2.1vw,1.3rem);
+    color:var(--muted);
+    max-width:60ch;
+    margin:0 0 2.4rem;
+  }
+  .lede strong{color:var(--text);font-weight:500;}
+
+  /* telemetry readout — the signature element */
+  .readout{
+    border:1px solid var(--line);
+    border-radius:12px;
+    background:linear-gradient(180deg,var(--panel),var(--bg-2));
+    font-family:var(--font-mono);
+    font-size:.8rem;
+    overflow:hidden;
+    max-width:640px;
+    box-shadow:0 24px 60px -30px rgba(0,0,0,.8);
+  }
+  .readout .r-head{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:.6rem .95rem;
+    border-bottom:1px solid var(--line-soft);
+    color:var(--faint);
+    letter-spacing:.14em;font-size:.66rem;text-transform:uppercase;
+  }
+  .live{display:flex;align-items:center;gap:.5em;color:var(--accent);}
+  .live .blip{width:7px;height:7px;border-radius:50%;background:var(--accent);}
+  .readout .r-row{
+    display:grid;
+    grid-template-columns:64px 1fr;
+    gap:.5rem 1rem;
+    padding:.55rem .95rem;
+    border-bottom:1px solid var(--line-soft);
+  }
+  .readout .r-row:last-child{border-bottom:0;}
+  .readout .r-key{color:var(--faint);letter-spacing:.1em;}
+  .readout .r-val{color:var(--text);}
+  .readout .r-val b{color:var(--accent);font-weight:500;}
+
+  /* stack tags */
+  .tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:2rem;}
+  .tag{
+    font-family:var(--font-mono);
+    font-size:.74rem;letter-spacing:.03em;
+    color:var(--muted);
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:.34rem .8rem;
+    background:var(--bg-2);
+    transition:border-color .18s,color .18s;
+  }
+  .tag:hover{border-color:var(--accent);color:var(--text);}
+
+  /* ---------- intro two-panel ---------- */
+  .intro{padding:clamp(20px,5vw,44px) 0 clamp(40px,7vw,72px);}
+  .panels{
+    display:grid;grid-template-columns:1fr 1fr;gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    border-radius:14px;overflow:hidden;
+  }
+  @media(max-width:720px){.panels{grid-template-columns:1fr;}}
+  .panel{background:var(--bg-2);padding:clamp(22px,3.5vw,34px);}
+  .panel h3{
+    font-family:var(--font-mono);
+    font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--accent);font-weight:500;margin:0 0 1rem;
+  }
+  .panel p{margin:0;color:var(--muted);}
+  .panel p strong{color:var(--text);font-weight:500;}
+
+  /* ---------- projects ---------- */
+  .projects{padding:clamp(24px,5vw,48px) 0 clamp(48px,8vw,88px);}
+  .sec-head{
+    display:flex;align-items:baseline;justify-content:space-between;
+    gap:1rem;flex-wrap:wrap;
+    border-bottom:1px solid var(--line);
+    padding-bottom:1.1rem;margin-bottom:clamp(24px,4vw,48px);
+  }
+  .sec-head h2{
+    font-family:var(--font-display);font-weight:600;
+    font-size:clamp(1.6rem,3.6vw,2.4rem);letter-spacing:-.01em;margin:0;
+  }
+  .sec-head .count{font-family:var(--font-mono);font-size:.78rem;color:var(--faint);letter-spacing:.1em;}
+
+  .project{
+    display:grid;
+    grid-template-columns:230px 1fr;
+    gap:clamp(20px,4vw,48px);
+    padding:clamp(28px,4vw,44px) 0;
+    border-top:1px solid var(--line-soft);
+  }
+  .project:first-of-type{border-top:0;}
+  @media(max-width:760px){.project{grid-template-columns:1fr;gap:1.2rem;}}
+
+  /* project meta rail */
+  .p-meta{display:flex;flex-direction:column;gap:.9rem;}
+  .p-sector{
+    font-family:var(--font-mono);font-size:.68rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--accent);
+    display:inline-flex;align-items:center;gap:.55em;width:max-content;
+  }
+  .p-sector::before{content:"";width:6px;height:6px;background:var(--accent);border-radius:50%;}
+  .p-meta .p-role{font-size:.9rem;color:var(--muted);}
+  .p-meta .p-role b{color:var(--text);font-weight:500;}
+  .p-stack{
+    font-family:var(--font-mono);font-size:.72rem;line-height:1.9;
+    color:var(--faint);border-top:1px solid var(--line-soft);padding-top:.8rem;
+  }
+
+  /* project body */
+  .p-body h3{
+    font-family:var(--font-display);font-weight:600;
+    font-size:clamp(1.4rem,2.8vw,1.9rem);letter-spacing:-.01em;
+    margin:0 0 .5rem;line-height:1.1;
+  }
+  .p-body h3 .cur{
+    font-family:var(--font-mono);font-size:.6rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--bg);background:var(--accent);
+    padding:.22em .55em;border-radius:5px;vertical-align:middle;
+    margin-left:.7rem;font-weight:600;
+  }
+  .p-body .p-lead{color:var(--muted);margin:.3rem 0 1.3rem;max-width:64ch;}
+  .p-body .p-lead b{color:var(--text);font-weight:500;}
+  .p-list{list-style:none;margin:0 0 1.4rem;padding:0;display:grid;gap:.7rem;}
+  .p-list li{
+    position:relative;padding-left:1.4rem;color:var(--muted);
+    max-width:66ch;font-size:.97rem;
+  }
+  .p-list li::before{
+    content:"";position:absolute;left:0;top:.62em;
+    width:7px;height:1px;background:var(--accent);
+  }
+  .p-list li b{color:var(--text);font-weight:500;}
+
+  .p-links{display:flex;flex-wrap:wrap;gap:.5rem;}
+  .chip{
+    font-family:var(--font-mono);font-size:.72rem;letter-spacing:.03em;
+    text-decoration:none;color:var(--text);
+    border:1px solid var(--line);border-radius:7px;
+    padding:.42rem .75rem;display:inline-flex;align-items:center;gap:.45em;
+    transition:border-color .18s,background .18s,color .18s;
+  }
+  .chip:hover{border-color:var(--accent);color:var(--accent);}
+  .chip.static{color:var(--faint);cursor:default;}
+  .chip.static:hover{border-color:var(--line);color:var(--faint);}
+  .chip svg{width:11px;height:11px;flex:none;opacity:.85;}
+
+  /* ---------- footer ---------- */
+  footer{border-top:1px solid var(--line);padding:clamp(40px,6vw,72px) 0 clamp(40px,6vw,64px);}
+  .foot-grid{display:flex;justify-content:space-between;align-items:flex-end;gap:2rem;flex-wrap:wrap;}
+  footer .f-name{font-family:var(--font-display);font-size:clamp(1.4rem,3vw,2rem);font-weight:600;margin:0 0 .4rem;}
+  footer .f-sub{color:var(--muted);margin:0;max-width:40ch;}
+  .f-contact{display:flex;flex-direction:column;gap:.55rem;font-family:var(--font-mono);font-size:.82rem;}
+  .f-contact a{color:var(--muted);text-decoration:none;display:flex;gap:.7em;align-items:center;transition:color .18s;}
+  .f-contact a:hover{color:var(--accent);}
+  .f-contact a .k{color:var(--faint);width:72px;letter-spacing:.1em;text-transform:uppercase;font-size:.68rem;}
+  .colophon{margin-top:clamp(32px,5vw,56px);color:var(--faint);font-family:var(--font-mono);font-size:.68rem;letter-spacing:.08em;}
+
+  /* reveal + motion */
+  @media(prefers-reduced-motion:no-preference){
+    .blip{animation:pulse 1.9s ease-in-out infinite;}
+    .brand .dot{animation:pulse 2.4s ease-in-out infinite;}
+    .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease;}
+    .reveal.in{opacity:1;transform:none;}
+  }
+  @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(245,196,81,.5);}50%{opacity:.55;box-shadow:0 0 0 6px rgba(245,196,81,0);}}
+
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px;}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#top"><span class="dot"></span>ALEXANDER&nbsp;EGGERS <span>· MOBILE&nbsp;TECH&nbsp;LEAD</span></a>
+    <nav class="navlinks">
+      <a href="#work">Work</a>
+      <a href="#about" class="hide-sm">About</a>
+      <a href="https://www.linkedin.com/in/alexander-eggers/">LinkedIn</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Mobile Tech Lead · 10 Years · Melbourne, AU</p>
+      <h1>Mobile apps built for <span class="accent">speed, scale &amp; trust.</span></h1>
+      <p class="lede">
+        I lead mobile teams and architecture across <strong>native Android &amp; iOS</strong>,
+        <strong>Kotlin Multiplatform</strong> and <strong>React Native</strong> — shipping to consumers,
+        businesses and enterprise across Australia, the US and Europe. Recent work spans privacy-first
+        encryption, fintech payments, and in-vehicle systems for autonomous cars.
+      </p>
+
+      <div class="readout" aria-label="Profile summary">
+        <div class="r-head">
+          <span>◦ PROFILE / TELEMETRY</span>
+          <span class="live"><span class="blip"></span>AVAILABLE</span>
+        </div>
+        <div class="r-row"><span class="r-key">LOC</span><span class="r-val">MELBOURNE, AU</span></div>
+        <div class="r-row"><span class="r-key">EXP</span><span class="r-val"><b>10 YEARS</b> &nbsp;·&nbsp; TECH LEAD / ENGINEERING LEAD</span></div>
+        <div class="r-row"><span class="r-key">STACK</span><span class="r-val">ANDROID · iOS · KMP/CMP · REACT NATIVE</span></div>
+        <div class="r-row"><span class="r-key">FOCUS</span><span class="r-val">ARCHITECTURE · APPLIED CRYPTOGRAPHY · TEAM LEADERSHIP</span></div>
+      </div>
+
+      <div class="tags">
+        <span class="tag">Android</span>
+        <span class="tag">iOS</span>
+        <span class="tag">Kotlin Multiplatform</span>
+        <span class="tag">Jetpack Compose</span>
+        <span class="tag">Swift</span>
+        <span class="tag">React Native</span>
+        <span class="tag">gRPC</span>
+        <span class="tag">GraphQL</span>
+        <span class="tag">CI/CD</span>
+        <span class="tag">Applied Cryptography</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT / INTRO -->
+  <section class="intro" id="about">
+    <div class="wrap">
+      <div class="panels">
+        <div class="panel">
+          <h3>What I bring</h3>
+          <p>Deep across the mobile stack, with working fluency in <strong>web, backend and hardware
+          integrations</strong>. I pick up new technology quickly with little guidance, mentor other
+          engineers, and aim for the best possible result for the project and the company.</p>
+        </div>
+        <div class="panel">
+          <h3>Platforms &amp; reach</h3>
+          <p>Native <strong>Android &amp; iOS</strong>, <strong>Kotlin Multiplatform</strong> and
+          <strong>React Native</strong> apps in production across <strong>Australia, the US and Europe</strong>
+          — serving consumers, businesses and enterprise clients.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="projects" id="work">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Selected work</h2>
+      </div>
+
+      <!-- GEOSHARE -->
+      <article class="project reveal">
+        <div class="p-meta">
+          <span class="p-sector">Privacy</span>
+          <span class="p-role"><b>Android → Mobile Team Lead</b><br>Android · iOS · QA</span>
+          <div class="p-stack">Kotlin<br>Kotlin Multiplatform<br>Jetpack Compose<br>gRPC · Encryption</div>
+        </div>
+        <div class="p-body">
+          <h3>Geoshare <span class="cur">Current</span></h3>
+          <p class="p-lead">Rebuilt a legacy Android app into a <b>privacy-first location-sharing platform</b> —
+          continuous background location with a cross-platform foundation for iOS. I owned the architecture,
+          security design and cross-platform direction, and built the mobile team from the ground up.</p>
+          <ul class="p-list">
+            <li><b>End-to-end encryption</b> — key exchange, key derivation and block cipher encryption. The backend never holds cleartext, and the design <b>passed external penetration testing</b>.</li>
+            <li>Background location draws <b>~1–2% per 6 hours</b> (down from double digits) — extending runtime from roughly a day to several days.</li>
+            <li>Migrated to a single <b>Kotlin Multiplatform + Compose codebase</b> — one implementation per feature, removing iOS/Android divergence.</li>
+            <li>Defined the <b>gRPC service contracts</b> end to end with the backend team.</li>
+          </ul>
+          <div class="p-links">
+            <a class="chip" href="https://geoshare.global" target="_blank" rel="noopener">geoshare.global ↗</a>
+            <span class="chip static">Google Play</span>
+            <span class="chip static">App Store</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ZELLER -->
+      <article class="project reveal">
+        <div class="p-meta">
+          <span class="p-sector">Fintech</span>
+          <span class="p-role"><b>Mobile Tech Lead</b><br>Team of 12</span>
+          <div class="p-stack">Kotlin · Swift<br>React Native · React<br>TypeScript<br>Apollo GraphQL</div>
+        </div>
+        <div class="p-body">
+          <h3>Zeller</h3>
+          <p class="p-lead">Took over a mobile project from an external agency, stabilised delivery, and shipped
+          <b>one of Australia's earliest tap-to-pay features</b> across both platforms — hands-on with architecture
+          while owning roadmap and mentorship.</p>
+          <ul class="p-list">
+            <li>Drove requirements, cross-team coordination and integration testing for the tap-to-pay launch — consuming a partner team's <b>KMP-based state machine</b> in React Native to drive the UI across Android and iOS.</li>
+            <li>Collaborated <b>directly with Apple</b> to finalise design and implementation for use in their Australian retail stores, with Apple's teams testing the integration hands-on.</li>
+            <li>Built a custom SDK exposing a <b>single shared payment codebase</b> to both native Android and React Native — adopted by two internal teams.</li>
+            <li>Mentored engineers — including web developers moving into mobile — to ship React Native features independently.</li>
+          </ul>
+          <div class="p-links">
+            <a class="chip" href="https://www.myzeller.com" target="_blank" rel="noopener">myzeller.com ↗</a>
+            <span class="chip static">Google Play</span>
+            <span class="chip static">App Store</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ZOOX -->
+      <article class="project reveal">
+        <div class="p-meta">
+          <span class="p-sector">Hardware</span>
+          <span class="p-role"><b>Tech Lead — end to end</b><br>Engineering · Client · Release</span>
+          <div class="p-stack">Android<br>Kotlin<br>Protocol Buffers</div>
+        </div>
+        <div class="p-body">
+          <h3>Zoox</h3>
+          <p class="p-lead">Built a <b>pixel-perfect, high-performance in-vehicle infotainment system</b> for an
+          autonomous vehicle under strict design and performance requirements — working across Zoox's design,
+          engineering, QA and audio teams.</p>
+          <ul class="p-list">
+            <li>Built a custom <b>dual-threaded bitmap rendering pipeline</b> for pixel-perfect, jank-free animation on the in-vehicle display.</li>
+            <li>Collaborated across design, engineering, QA and audio to polish the full experience.</li>
+            <li><b>Showcased at Zoox's global vehicle reveal event in 2022.</b></li>
+          </ul>
+          <div class="p-links">
+            <a class="chip" href="https://zoox.com/know-your-ride" target="_blank" rel="noopener">zoox.com/know-your-ride ↗</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ATHENA -->
+      <article class="project reveal">
+        <div class="p-meta">
+          <span class="p-sector">Fintech</span>
+          <span class="p-role"><b>Engineering Lead — Bilue</b><br>5-person team</span>
+          <div class="p-stack">Kotlin · Swift<br>Android · iOS</div>
+        </div>
+        <div class="p-body">
+          <h3>Athena</h3>
+          <p class="p-lead">Built a home-loan lender's <b>first mobile app from scratch</b> — a secure, self-service
+          mortgage experience across iOS and Android — leading a five-person cross-functional team from kickoff
+          through delivery.</p>
+          <ul class="p-list">
+            <li>Launched Athena's first mobile app on iOS and Android, giving customers <b>full self-service</b> in place of a basic web portal.</li>
+            <li>Established the mobile <b>security layer</b> — SSL pinning and service-token safeguards.</li>
+            <li>Delivered biometric login and <b>instant payments</b> via Australia's New Payments Platform.</li>
+          </ul>
+          <div class="p-links">
+            <a class="chip" href="https://www.athena.com.au" target="_blank" rel="noopener">athena.com.au ↗</a>
+            <span class="chip static">Google Play</span>
+            <span class="chip static">App Store</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- GUZMAN Y GOMEZ -->
+      <article class="project reveal">
+        <div class="p-meta">
+          <span class="p-sector">Food-tech</span>
+          <span class="p-role"><b>Engineering Lead — Bilue</b><br>Technical focus</span>
+          <div class="p-stack">React Native<br>Kotlin · Swift</div>
+        </div>
+        <div class="p-body">
+          <h3>Guzman y Gomez</h3>
+          <p class="p-lead">Modernised a <b>high-traffic consumer ordering app</b>, bringing an established live
+          codebase up to current mobile standards — refactoring and elevating the app rather than people management.</p>
+          <ul class="p-list">
+            <li>Refactored the app, replacing outdated tooling and dependencies.</li>
+            <li>Brought the codebase in line with current <b>React Native, Android and iOS best practices</b>.</li>
+          </ul>
+          <div class="p-links">
+            <span class="chip static">Google Play</span>
+            <span class="chip static">App Store</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- GOVERNMENT -->
+      <article class="project reveal">
+        <div class="p-meta">
+          <span class="p-sector">Government</span>
+          <span class="p-role"><b>Android &amp; middleware</b><br>Forest Fire Management VIC</span>
+          <div class="p-stack">Android · Kotlin<br>.NET</div>
+        </div>
+        <div class="p-body">
+          <h3>More to Explore &amp; Tarnook</h3>
+          <p class="p-lead">Two Victorian Government apps for <b>Forest Fire Management Victoria</b> — building both
+          the Android clients and the .NET middleware they relied on, and shaping the service contracts so apps and
+          middleware could consume data reliably.</p>
+          <ul class="p-list">
+            <li><b>More to Explore</b> — helps users discover outdoor recreational areas across the state; extended existing .NET middleware to add features.</li>
+            <li><b>Tarnook</b> — lets FFMVic staff, partner agencies, volunteers and contractors view, record and update key operational information in the field and <b>offline</b>; built the .NET middleware it relied on.</li>
+          </ul>
+        </div>
+      </article>
+
+    </div>
+  </section>
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <p class="f-name">Let's build something.</p>
+        <p class="f-sub">Open to Mobile Tech Lead and senior mobile engineering roles — Melbourne or remote.</p>
+      </div>
+      <div class="f-contact">
+        <a href="https://www.linkedin.com/in/alexander-eggers/" target="_blank" rel="noopener"><span class="k">LinkedIn</span>linkedin.com/in/alexander-eggers&nbsp;↗</a>
+        <a href="https://github.com/AlexanderEggers" target="_blank" rel="noopener"><span class="k">GitHub</span>github.com/AlexanderEggers&nbsp;↗</a>
+      </div>
+    </div>
+    <p class="colophon">© 2026 ALEXANDER EGGERS</p>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var items = document.querySelectorAll('.reveal');
+    if(!('IntersectionObserver' in window)){ items.forEach(function(el){el.classList.add('in');}); return; }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+    items.forEach(function(el){ io.observe(el); });
+  })();
+</script>
+</body>
+</html>
