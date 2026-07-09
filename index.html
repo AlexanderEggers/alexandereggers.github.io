@@ -56,6 +56,7 @@
     line-height:1.6;
     -webkit-font-smoothing:antialiased;
     text-rendering:optimizeLegibility;
+    overflow-x:hidden;
   }
   body::before{
     /* faint instrument grid */
@@ -114,10 +115,12 @@
     color:var(--text);
     display:flex;align-items:center;gap:.6em;
     text-decoration:none;
+    min-width:0;overflow:hidden;
   }
-  .brand .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);}
-  .brand span{color:var(--faint);}
-  .navlinks{display:flex;gap:.4rem;}
+  .brand .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);flex:none;}
+  .bname{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .bsub{color:var(--faint);white-space:nowrap;}
+  .navlinks{display:flex;gap:.4rem;flex:0 0 auto;}
   .navlinks a{
     font-family:var(--font-mono);
     font-size:.74rem;letter-spacing:.06em;
@@ -139,6 +142,7 @@
     letter-spacing:-.02em;
     margin:0 0 1.5rem;
     max-width:15ch;
+    overflow-wrap:break-word;
   }
   .hero h1 .accent{color:var(--accent);}
   .lede{
@@ -296,10 +300,39 @@
   footer .f-name{font-family:var(--font-display);font-size:clamp(1.4rem,3vw,2rem);font-weight:600;margin:0 0 .4rem;}
   footer .f-sub{color:var(--muted);margin:0;max-width:40ch;}
   .f-contact{display:flex;flex-direction:column;gap:.55rem;font-family:var(--font-mono);font-size:.82rem;}
-  .f-contact a{color:var(--muted);text-decoration:none;display:flex;gap:.7em;align-items:center;transition:color .18s;}
+  .f-contact a{color:var(--muted);text-decoration:none;display:flex;gap:.7em;align-items:center;transition:color .18s;min-width:0;overflow-wrap:anywhere;}
   .f-contact a:hover{color:var(--accent);}
   .f-contact a .k{color:var(--faint);width:72px;letter-spacing:.1em;text-transform:uppercase;font-size:.68rem;}
   .colophon{margin-top:clamp(32px,5vw,56px);color:var(--faint);font-family:var(--font-mono);font-size:.68rem;letter-spacing:.08em;}
+
+  /* ---------- responsive: small screens ---------- */
+  @media(max-width:600px){
+    .topbar .wrap{height:56px;gap:.75rem;}
+    .brand{font-size:.78rem;letter-spacing:.02em;}
+    .bsub{display:none;}
+    .navlinks{gap:.15rem;}
+    .navlinks a{padding:.45rem .55rem;}
+
+    .eyebrow{letter-spacing:.14em;flex-wrap:wrap;gap:.5em;}
+    .eyebrow::before{width:18px;}
+
+    .hero{padding:44px 0 40px;}
+    .hero h1{font-size:clamp(2.15rem,9vw,3rem);}
+    .lede{font-size:1.02rem;}
+
+    .readout{font-size:.72rem;}
+    .readout .r-head{padding:.55rem .8rem;font-size:.6rem;letter-spacing:.1em;}
+    .readout .r-row{grid-template-columns:50px 1fr;gap:.4rem .7rem;padding:.5rem .8rem;}
+
+    .tags{margin-top:1.5rem;}
+
+    .f-contact a{flex-wrap:wrap;}
+    .f-contact a .k{width:100%;}
+  }
+  @media(max-width:380px){
+    .brand{font-size:.72rem;}
+    .navlinks a{font-size:.7rem;padding:.4rem .45rem;}
+  }
 
   /* reveal + motion */
   @media(prefers-reduced-motion:no-preference){
@@ -317,7 +350,7 @@
 
 <header class="topbar">
   <div class="wrap">
-    <a class="brand" href="#top"><span class="dot"></span>ALEXANDER&nbsp;EGGERS <span>· MOBILE&nbsp;TECH&nbsp;LEAD</span></a>
+    <a class="brand" href="#top"><span class="dot"></span><span class="bname">ALEXANDER&nbsp;EGGERS</span><span class="bsub">&nbsp;·&nbsp;MOBILE&nbsp;TECH&nbsp;LEAD</span></a>
     <nav class="navlinks">
       <a href="#work">Work</a>
       <a href="#about" class="hide-sm">About</a>
