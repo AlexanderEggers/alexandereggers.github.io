@@ -347,7 +347,7 @@
         </div>
         <div class="r-row"><span class="r-key">LOC</span><span class="r-val">MELBOURNE, AU</span></div>
         <div class="r-row"><span class="r-key">EXP</span><span class="r-val"><b>10 YEARS</b> &nbsp;·&nbsp; TECH LEAD / ENGINEERING LEAD</span></div>
-        <div class="r-row"><span class="r-key">STACK</span><span class="r-val">ANDROID · iOS · KMP/CMP · REACT NATIVE</span></div>
+        <div class="r-row"><span class="r-key">STACK</span><span class="r-val">ANDROID · iOS · REACT NATIVE · KMP/CMP</span></div>
         <div class="r-row"><span class="r-key">FOCUS</span><span class="r-val">FRONTEND · ARCHITECTURE · TEAM LEADERSHIP</span></div>
       </div>
 
@@ -364,6 +364,8 @@
         <span class="tag">CI/CD</span>
         <span class="tag">ASP.NET</span>
         <span class="tag">Node.js</span>
+        <span class="tag">Python</span>
+        <span class="tag">Typescript</span>
       </div>
     </div>
   </section>
@@ -408,7 +410,7 @@
           continuous background location with a cross-platform foundation for iOS. I owned the architecture,
           security design and cross-platform direction, and built the mobile team from the ground up.</p>
           <ul class="p-list">
-            <li><b>End-to-end encryption</b> — key exchange, key derivation and block cipher encryption. The backend never holds cleartext, and the design <b>passed external penetration testing</b>.</li>
+            <li><b>End-to-end encryption</b> — X25519 (ECDH) key exchange, HKDF-SHA-512 derivation and ChaCha20-Poly1305 authenticated encryption; the backend never holds cleartext, and the design <b>passed external penetration testing</b>. Also hardened the client with an encrypted local database (SQLCipher) and enterprise obfuscation (DexGuard).</li>
             <li>Background location draws <b>~1–2% per 6 hours</b> (down from double digits) — extending runtime from roughly a day to several days.</li>
             <li>Migrated to a single <b>Kotlin Multiplatform + Compose codebase</b> — one implementation per feature, removing iOS/Android divergence.</li>
             <li>Defined the <b>gRPC service contracts</b> end to end with the backend team.</li>
