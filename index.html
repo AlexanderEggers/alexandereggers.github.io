@@ -399,9 +399,15 @@
     cursor:zoom-out;
   }
   /* blur on a pseudo-element, NOT the fixed container:
-     backdrop-filter on position:fixed breaks positioning in WebKit/iOS */
+     backdrop-filter on position:fixed breaks positioning in WebKit/iOS.
+     The blur amount is animated because opacity fades don't affect
+     backdrop-filter in Chromium — without this it pops off abruptly. */
   .lightbox::before{
     content:"";position:absolute;inset:0;
+    backdrop-filter:blur(0px);-webkit-backdrop-filter:blur(0px);
+    transition:backdrop-filter .25s ease,-webkit-backdrop-filter .25s ease;
+  }
+  .lightbox.open::before{
     backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
   }
   .lightbox.open{opacity:1;visibility:visible;}
@@ -413,6 +419,8 @@
     transform:scale(.96);transition:transform .25s ease;cursor:default;
   }
   .lightbox.open img{transform:none;}
+  /* while closing: pure fade-out, no reverse zoom */
+  .lightbox.closing img{transform:none;transition:none;}
   .lightbox .lb-close{
     position:absolute;z-index:2;
     top:max(clamp(14px,3vw,26px),env(safe-area-inset-top,0px));
@@ -426,7 +434,7 @@
   }
   .lightbox .lb-close:hover{border-color:var(--accent);color:var(--accent);}
   @media(prefers-reduced-motion:reduce){
-    .lightbox,.lightbox img{transition:none;}
+    .lightbox,.lightbox img,.lightbox::before{transition:none;}
     .lightbox img{transform:none;}
   }
 </style>
@@ -826,7 +834,11 @@
       window.visualViewport.addEventListener('scroll', repositionClose);
     }
 
+    var closingTimer = null;
+
     function open(img){
+      if(closingTimer){ clearTimeout(closingTimer); closingTimer = null; }
+      lb.classList.remove('closing');
       lastFocused = img;
       lbImg.src = img.currentSrc || img.src;
       lbImg.alt = img.alt || '';
@@ -837,7 +849,13 @@
     }
     function close(){
       if(!lb.classList.contains('open')) return;
+      lb.classList.add('closing'); /* fade out without the reverse zoom */
       lb.classList.remove('open');
+      if(closingTimer) clearTimeout(closingTimer);
+      closingTimer = setTimeout(function(){
+        lb.classList.remove('closing');
+        closingTimer = null;
+      }, 300);
       closeBtn.style.top = ''; closeBtn.style.right = ''; closeBtn.style.left = '';
       unlockScroll();
       if(lastFocused){ focusNoScroll(lastFocused); }
