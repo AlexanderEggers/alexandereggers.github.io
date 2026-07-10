@@ -60,7 +60,10 @@
     line-height:1.6;
     -webkit-font-smoothing:antialiased;
     text-rendering:optimizeLegibility;
-    overflow-x:hidden;
+  }
+  html,body{
+    overflow-x:hidden; /* fallback for older browsers */
+    overflow-x:clip;   /* prevents touch-panning into overflow on Android */
   }
   body::before{
     /* faint instrument grid */
@@ -310,7 +313,7 @@
   /* ---------- hero showcase + device frames ---------- */
   .hero{position:relative;}
   .hero::before{
-    content:"";position:absolute;top:-12%;right:-6%;width:72%;height:130%;
+    content:"";position:absolute;top:-12%;right:0;width:72%;height:130%;
     background:radial-gradient(50% 50% at 72% 32%, rgba(77,159,255,.16), transparent 70%);
     pointer-events:none;z-index:0;
   }
@@ -381,62 +384,6 @@
 
   .vh{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
 
-  /* ---------- lightbox (click a screenshot to enlarge) ---------- */
-  .shot img{cursor:zoom-in;}
-  .lightbox{
-    position:fixed;top:0;left:0;width:100%;
-    height:100vh;height:100dvh; /* dvh: tracks mobile URL-bar collapse */
-    z-index:100;
-    display:flex;align-items:center;justify-content:center;
-    padding:max(clamp(20px,5vw,60px),env(safe-area-inset-top,0px))
-            max(clamp(20px,5vw,60px),env(safe-area-inset-right,0px))
-            max(clamp(20px,5vw,60px),env(safe-area-inset-bottom,0px))
-            max(clamp(20px,5vw,60px),env(safe-area-inset-left,0px));
-    background:rgba(6,8,12,.9);
-    overscroll-behavior:contain;
-    opacity:0;visibility:hidden;
-    transition:opacity .25s ease,visibility .25s ease;
-    cursor:zoom-out;
-  }
-  /* blur on a pseudo-element, NOT the fixed container:
-     backdrop-filter on position:fixed breaks positioning in WebKit/iOS.
-     The blur amount is animated because opacity fades don't affect
-     backdrop-filter in Chromium — without this it pops off abruptly. */
-  .lightbox::before{
-    content:"";position:absolute;inset:0;
-    backdrop-filter:blur(0px);-webkit-backdrop-filter:blur(0px);
-    transition:backdrop-filter .25s ease,-webkit-backdrop-filter .25s ease;
-  }
-  .lightbox.open::before{
-    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
-  }
-  .lightbox.open{opacity:1;visibility:visible;}
-  .lightbox img{
-    position:relative;z-index:1;
-    max-width:100%;max-height:100%;width:auto;height:auto;
-    border-radius:16px;border:1px solid var(--line);
-    box-shadow:0 40px 90px -30px rgba(0,0,0,.9);
-    transform:scale(.96);transition:transform .25s ease;cursor:default;
-  }
-  .lightbox.open img{transform:none;}
-  /* while closing: pure fade-out, no reverse zoom */
-  .lightbox.closing img{transform:none;transition:none;}
-  .lightbox .lb-close{
-    position:absolute;z-index:2;
-    top:max(clamp(14px,3vw,26px),env(safe-area-inset-top,0px));
-    right:max(clamp(14px,3vw,26px),env(safe-area-inset-right,0px));
-    width:44px;height:44px;border-radius:50%;
-    border:1px solid var(--line);background:var(--bg-2);color:var(--text);
-    font-family:var(--font-mono);font-size:1.05rem;line-height:1;
-    display:flex;align-items:center;justify-content:center;cursor:pointer;
-    -webkit-tap-highlight-color:transparent;
-    transition:border-color .18s,color .18s;
-  }
-  .lightbox .lb-close:hover{border-color:var(--accent);color:var(--accent);}
-  @media(prefers-reduced-motion:reduce){
-    .lightbox,.lightbox img,.lightbox::before{transition:none;}
-    .lightbox img{transform:none;}
-  }
 </style>
 
 <noscript><style>.reveal{opacity:1 !important;transform:none !important;}</style></noscript>
@@ -776,103 +723,6 @@
     <p class="colophon">© 2026 ALEXANDER EGGERS</p>
   </div>
 </footer>
-
-<!-- lightbox target -->
-<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged screenshot">
-  <button class="lb-close" type="button" aria-label="Close">&#10005;</button>
-  <img src="" alt="">
-</div>
-
-<script>
-  /* click a screenshot to enlarge it */
-  (function(){
-    var lb = document.getElementById('lightbox');
-    if(!lb) return;
-    var lbImg = lb.querySelector('img');
-    var closeBtn = lb.querySelector('.lb-close');
-    var lastFocused = null;
-
-    var savedScrollY = 0;
-    /* overflow:hidden on body does not stop scrolling on iOS Safari;
-       fixing the body in place (and restoring the offset on close) does */
-    function lockScroll(){
-      savedScrollY = window.scrollY || document.documentElement.scrollTop || 0;
-      var s = document.body.style;
-      s.position = 'fixed'; s.top = (-savedScrollY) + 'px';
-      s.left = '0'; s.right = '0'; s.width = '100%';
-    }
-    function unlockScroll(){
-      var s = document.body.style;
-      s.position = ''; s.top = ''; s.left = ''; s.right = ''; s.width = '';
-      try { window.scrollTo({top: savedScrollY, left: 0, behavior: 'instant'}); }
-      catch(_) { window.scrollTo(0, savedScrollY); }
-    }
-    function focusNoScroll(el){
-      try { el.focus({preventScroll: true}); } catch(_) { el.focus(); }
-    }
-
-    /* pinch-zoom fix: when zoomed, position:fixed pins to the LAYOUT viewport,
-       so the close button can sit outside the visible (visual) viewport.
-       While open, pin the button to the visual viewport instead. */
-    function repositionClose(){
-      var vv = window.visualViewport;
-      if(!vv || !lb.classList.contains('open')) return;
-      var zoomed = vv.scale > 1.01 || vv.offsetTop > 1 || vv.offsetLeft > 1;
-      if(zoomed){
-        var m = 14;
-        closeBtn.style.top = (vv.offsetTop + m) + 'px';
-        closeBtn.style.right = 'auto';
-        closeBtn.style.left = (vv.offsetLeft + vv.width - m - closeBtn.offsetWidth) + 'px';
-      } else {
-        closeBtn.style.top = ''; closeBtn.style.right = ''; closeBtn.style.left = '';
-      }
-    }
-    if(window.visualViewport){
-      window.visualViewport.addEventListener('resize', repositionClose);
-      window.visualViewport.addEventListener('scroll', repositionClose);
-    }
-
-    var closingTimer = null;
-
-    function open(img){
-      if(closingTimer){ clearTimeout(closingTimer); closingTimer = null; }
-      lb.classList.remove('closing');
-      lastFocused = img;
-      lbImg.src = img.currentSrc || img.src;
-      lbImg.alt = img.alt || '';
-      lb.classList.add('open');
-      lockScroll();
-      repositionClose();
-      focusNoScroll(closeBtn);
-    }
-    function close(){
-      if(!lb.classList.contains('open')) return;
-      lb.classList.add('closing'); /* fade out without the reverse zoom */
-      lb.classList.remove('open');
-      if(closingTimer) clearTimeout(closingTimer);
-      closingTimer = setTimeout(function(){
-        lb.classList.remove('closing');
-        closingTimer = null;
-      }, 300);
-      closeBtn.style.top = ''; closeBtn.style.right = ''; closeBtn.style.left = '';
-      unlockScroll();
-      if(lastFocused){ focusNoScroll(lastFocused); }
-    }
-
-    document.querySelectorAll('.shot img').forEach(function(img){
-      img.setAttribute('tabindex', '0');
-      img.setAttribute('role', 'button');
-      img.setAttribute('aria-label', 'Enlarge: ' + (img.alt || 'screenshot'));
-      img.addEventListener('click', function(){ open(img); });
-      img.addEventListener('keydown', function(e){
-        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); open(img); }
-      });
-    });
-    // click backdrop or close button (anywhere but the image) to dismiss
-    lb.addEventListener('click', function(e){ if(e.target !== lbImg) close(); });
-    document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
-  })();
-</script>
 
 <script>
   (function(){
