@@ -50,7 +50,7 @@
   }
 
   *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
+  @media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth;}}
   body{
     margin:0;
     background:var(--bg);
@@ -253,6 +253,7 @@
     display:inline-flex;align-items:center;gap:.55em;width:max-content;
   }
   .p-sector::before{content:"";width:6px;height:6px;background:var(--accent);border-radius:50%;}
+  .p-meta .p-dates{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.12em;color:var(--faint);text-transform:uppercase;}
   .p-meta .p-role{font-size:.9rem;color:var(--muted);}
   .p-meta .p-role b{color:var(--text);font-weight:500;}
   .p-stack{
@@ -294,9 +295,6 @@
     transition:border-color .18s,background .18s,color .18s;
   }
   .chip:hover{border-color:var(--accent);color:var(--accent);}
-  .chip.static{color:var(--faint);cursor:default;}
-  .chip.static:hover{border-color:var(--line);color:var(--faint);}
-  .chip svg{width:11px;height:11px;flex:none;opacity:.85;}
 
   /* ---------- footer ---------- */
   footer{border-top:1px solid var(--line);padding:clamp(40px,6vw,72px) 0 clamp(40px,6vw,64px);}
@@ -461,7 +459,7 @@
     <div class="wrap">
       <div class="hero-grid">
       <div class="hero-text">
-      <p class="eyebrow">Mobile Tech Lead · 10 Years · Melbourne, AU</p>
+      <p class="eyebrow">Mobile Tech Lead · Melbourne, AU</p>
       <h1>Mobile apps built for <span class="accent">speed, scale &amp; trust.</span></h1>
       <p class="lede">
         I lead mobile teams and architecture across <strong>native Android &amp; iOS</strong>,
@@ -499,7 +497,7 @@
       </div>
       </div><!-- /hero-text -->
       <div class="hero-media">
-        <div class="shot"><img src="assets/geoshare-1.webp" alt="Geoshare — Share Where You Are" loading="lazy"></div>
+        <div class="shot"><img src="assets/geoshare-1.webp" alt="Geoshare app — privacy-first live location sharing" fetchpriority="high"></div>
       </div>
       </div><!-- /hero-grid -->
     </div>
@@ -513,8 +511,8 @@
         <div class="panel">
           <h3>What I bring</h3>
           <p>Deep across the <strong>mobile stack</strong>, with working fluency in <strong>web, backend and hardware
-          integrations</strong>. I pick up new technology quickly with little guidance, mentor other
-          engineers, and aim for the best possible result for the project and the company.</p>
+          integrations</strong>. I move fast in unfamiliar territory and bring the team with me — mentoring
+          engineers and aiming for the best possible result for the project and the company.</p>
         </div>
         <div class="panel">
           <h3>Platforms &amp; reach</h3>
@@ -531,12 +529,14 @@
     <div class="wrap">
       <div class="sec-head">
         <h2>Selected work</h2>
+        <span class="count">07 PROJECTS</span>
       </div>
 
       <!-- GEOSHARE -->
       <article class="project reveal">
         <div class="p-meta">
           <span class="p-sector">Privacy</span>
+          <span class="p-dates">JUN 2024 – PRESENT</span>
           <span class="p-role"><b>Android → Mobile Team Lead</b><br>Team of 7</span>
           <div class="p-stack">Kotlin · Swift<br>Kotlin/Compose Multiplatform<br>Jetpack Compose<br>gRPC · Encryption</div>
         </div>
@@ -546,14 +546,15 @@
           continuous background location with a cross-platform foundation for iOS. I owned the architecture,
           security design and cross-platform direction.</p>
           <ul class="p-list">
-            <li><b>End-to-end encryption</b> — X25519 (ECDH) key exchange, HKDF-SHA-512 derivation and ChaCha20-Poly1305 authenticated encryption; the backend never holds cleartext, and the design <b>passed external penetration testing</b>. Also hardened the client with an encrypted local database (SQLCipher) and enterprise obfuscation (DexGuard).</li>
+            <li><b>End-to-end encryption</b> — X25519 (ECDH) key exchange, HKDF-SHA-512 derivation and ChaCha20-Poly1305 authenticated encryption; the backend never holds cleartext, and the design <b>passed external penetration testing</b>.</li>
+            <li>Hardened the client with an <b>encrypted local database</b> (SQLCipher) and enterprise-grade obfuscation (DexGuard).</li>
             <li>Background location draws <b>~1–2% per 6 hours</b> (down from double digits) — extending runtime from roughly a day to several days.</li>
             <li>Migrated to a single <b>Kotlin Multiplatform + Compose codebase</b> — one implementation per feature, removing iOS/Android divergence.</li>
             <li>Defined the <b>gRPC service contracts</b> end to end with the backend team.</li>
           </ul>
           <div class="p-shots">
-            <div class="shot"><img src="assets/geoshare-1.webp" alt="Geoshare screenshot" loading="lazy"></div>
-            <div class="shot"><img src="assets/geoshare-2.webp" alt="Geoshare screenshot" loading="lazy"></div>
+            <div class="shot"><img src="assets/geoshare-2.webp" alt="Geoshare app — encrypted location sharing interface" loading="lazy"></div>
+            <div class="shot"><img src="assets/geoshare-3.webp" alt="Geoshare app — location sharing with contacts" loading="lazy"></div>
           </div>
           <div class="p-links">
             <a class="chip" href="https://geoshare.global" target="_blank" rel="noopener">geoshare.global ↗</a>
@@ -567,6 +568,7 @@
       <article class="project reveal">
         <div class="p-meta">
           <span class="p-sector">Fintech</span>
+          <span class="p-dates">JAN 2023 – MAR 2024</span>
           <span class="p-role"><b>Mobile Tech Lead</b><br>Team of 12</span>
           <div class="p-stack">Kotlin · Swift<br>React Native · React<br>TypeScript<br>Apollo GraphQL</div>
         </div>
@@ -582,8 +584,8 @@
             <li>Mentored engineers — including web developers moving into mobile — to ship React Native features independently.</li>
           </ul>
           <div class="p-shots">
-            <div class="shot"><img src="assets/zeller-1.webp" alt="Zeller screenshot" loading="lazy"></div>
-            <div class="shot"><img src="assets/zeller-2.webp" alt="Zeller screenshot" loading="lazy"></div>
+            <div class="shot"><img src="assets/zeller-1.webp" alt="Zeller app — business finance dashboard" loading="lazy"></div>
+            <div class="shot"><img src="assets/zeller-2.webp" alt="Zeller app — tap-to-pay payment acceptance" loading="lazy"></div>
           </div>
           <div class="p-links">
             <a class="chip" href="https://www.myzeller.com" target="_blank" rel="noopener">myzeller.com ↗</a>
@@ -597,6 +599,7 @@
       <article class="project reveal">
         <div class="p-meta">
           <span class="p-sector">Hardware</span>
+          <span class="p-dates">JUL 2020 – AUG 2021</span>
           <span class="p-role"><b>Tech Lead — end to end</b><br>Engineering · Client · Release</span>
           <div class="p-stack">Android<br>Kotlin<br>Protocol Buffers</div>
         </div>
@@ -623,6 +626,7 @@
       <article class="project reveal">
         <div class="p-meta">
           <span class="p-sector">Fintech</span>
+          <span class="p-dates">SEP 2021 – SEP 2022</span>
           <span class="p-role"><b>Engineering Lead — Bilue</b><br>Team of 5</span>
           <div class="p-stack">React Native · React<br>TypeScript<br>Kotlin · Swift</div>
         </div>
@@ -637,8 +641,8 @@
             <li>Delivered biometric login and <b>instant payments</b> via Australia's New Payments Platform.</li>
           </ul>
           <div class="p-shots">
-            <div class="shot"><img src="assets/athena-1.webp" alt="Athena screenshot" loading="lazy"></div>
-            <div class="shot"><img src="assets/athena-2.webp" alt="Athena screenshot" loading="lazy"></div>
+            <div class="shot"><img src="assets/athena-1.webp" alt="Athena app — home loan overview" loading="lazy"></div>
+            <div class="shot"><img src="assets/athena-2.webp" alt="Athena app — self-service mortgage management" loading="lazy"></div>
           </div>
           <div class="p-links">
             <a class="chip" href="https://www.athena.com.au" target="_blank" rel="noopener">athena.com.au ↗</a>
@@ -652,6 +656,7 @@
       <article class="project reveal">
         <div class="p-meta">
           <span class="p-sector">Food-tech</span>
+          <span class="p-dates">SEP – DEC 2022</span>
           <span class="p-role"><b>Engineering Lead — Bilue</b><br>Technical focus</span>
           <div class="p-stack">React Native · React<br>TypeScript<br>Kotlin · Swift</div>
         </div>
@@ -664,8 +669,8 @@
             <li>Brought the codebase in line with current <b>React Native, Android and iOS best practices</b>.</li>
           </ul>
           <div class="p-shots">
-            <div class="shot"><img src="assets/gyg-1.webp" alt="Guzman y Gomez screenshot" loading="lazy"></div>
-            <div class="shot"><img src="assets/gyg-2.webp" alt="Guzman y Gomez screenshot" loading="lazy"></div>
+            <div class="shot"><img src="assets/gyg-1.webp" alt="Guzman y Gomez app — food ordering menu" loading="lazy"></div>
+            <div class="shot"><img src="assets/gyg-2.webp" alt="Guzman y Gomez app — order checkout" loading="lazy"></div>
           </div>
           <div class="p-links">
             <a class="chip" href="https://play.google.com/store/apps/details?id=com.gyg.gomex" target="_blank" rel="noopener">Google Play ↗</a>
@@ -678,6 +683,7 @@
       <article class="project reveal">
         <div class="p-meta">
           <span class="p-sector">Government</span>
+          <span class="p-dates">2018 – 2021</span>
           <span class="p-role"><b>Android &amp; middleware</b><br>Forest Fire Management VIC</span>
           <div class="p-stack">Android · Kotlin<br>.NET</div>
         </div>
@@ -691,10 +697,10 @@
             <li><b>Tarnook</b> — lets FFMVic staff, partner agencies, volunteers and contractors view, record and update key operational information in the field and <b>offline</b>; built the .NET middleware it relied on.</li>
           </ul>
           <div class="p-shots">
-            <div class="shot"><img src="assets/more-to-explore-1.webp" alt="More to Explore screenshot" loading="lazy"></div>
-            <div class="shot"><img src="assets/more-to-explore-2.webp" alt="More to Explore screenshot" loading="lazy"></div>
-            <div class="shot"><img src="assets/tarnook-1.webp" alt="Tarnook screenshot" loading="lazy"></div>
-            <div class="shot"><img src="assets/tarnook-2.webp" alt="Tarnook screenshot" loading="lazy"></div>
+            <div class="shot"><img src="assets/more-to-explore-1.webp" alt="More to Explore app — discovering outdoor recreation areas in Victoria" loading="lazy"></div>
+            <div class="shot"><img src="assets/more-to-explore-2.webp" alt="More to Explore app — recreation site details" loading="lazy"></div>
+            <div class="shot"><img src="assets/tarnook-1.webp" alt="Tarnook app — field operations data for FFMVic staff" loading="lazy"></div>
+            <div class="shot"><img src="assets/tarnook-2.webp" alt="Tarnook app — offline operational records" loading="lazy"></div>
           </div>
           <div class="p-links">
             <a class="chip" href="https://play.google.com/store/apps/details?id=au.gov.vic.ffm.mte.android" target="_blank" rel="noopener">More to Explore ↗</a>
@@ -707,6 +713,7 @@
       <article class="project reveal">
         <div class="p-meta">
           <span class="p-sector">Telecom</span>
+          <span class="p-dates">AUG 2017 – FEB 2018</span>
           <span class="p-role"><b>Android Engineer</b><br>O2 · Telefónica Germany</span>
           <div class="p-stack">Android<br>Kotlin · Java<br>MVVM</div>
         </div>
@@ -719,8 +726,8 @@
             <li>Built a custom in-app <b>alert / messaging system</b> (dialogs, snackbars, in-app views) for consistent user messaging across the app. Open-sourced it as <b>hitogo</b> on GitHub.</li>
           </ul>
           <div class="p-shots">
-            <div class="shot"><img src="assets/o2-1.webp" alt="O2 app screenshot" loading="lazy"></div>
-            <div class="shot"><img src="assets/o2-2.webp" alt="O2 app screenshot" loading="lazy"></div>
+            <div class="shot"><img src="assets/o2-1.webp" alt="O2 Telefónica app — account overview" loading="lazy"></div>
+            <div class="shot"><img src="assets/o2-2.webp" alt="O2 Telefónica app — in-app alert messaging" loading="lazy"></div>
           </div>
           <div class="p-links">
             <a class="chip" href="https://play.google.com/store/apps/details?id=canvasm.myo2&hl=de" target="_blank" rel="noopener">Google Play ↗</a>
@@ -780,7 +787,13 @@
     }
 
     document.querySelectorAll('.shot img').forEach(function(img){
+      img.setAttribute('tabindex', '0');
+      img.setAttribute('role', 'button');
+      img.setAttribute('aria-label', 'Enlarge: ' + (img.alt || 'screenshot'));
       img.addEventListener('click', function(){ open(img); });
+      img.addEventListener('keydown', function(e){
+        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); open(img); }
+      });
     });
     // click backdrop or close button (anywhere but the image) to dismiss
     lb.addEventListener('click', function(e){ if(e.target !== lbImg) close(); });
