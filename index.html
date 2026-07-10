@@ -805,17 +805,40 @@
       try { el.focus({preventScroll: true}); } catch(_) { el.focus(); }
     }
 
+    /* pinch-zoom fix: when zoomed, position:fixed pins to the LAYOUT viewport,
+       so the close button can sit outside the visible (visual) viewport.
+       While open, pin the button to the visual viewport instead. */
+    function repositionClose(){
+      var vv = window.visualViewport;
+      if(!vv || !lb.classList.contains('open')) return;
+      var zoomed = vv.scale > 1.01 || vv.offsetTop > 1 || vv.offsetLeft > 1;
+      if(zoomed){
+        var m = 14;
+        closeBtn.style.top = (vv.offsetTop + m) + 'px';
+        closeBtn.style.right = 'auto';
+        closeBtn.style.left = (vv.offsetLeft + vv.width - m - closeBtn.offsetWidth) + 'px';
+      } else {
+        closeBtn.style.top = ''; closeBtn.style.right = ''; closeBtn.style.left = '';
+      }
+    }
+    if(window.visualViewport){
+      window.visualViewport.addEventListener('resize', repositionClose);
+      window.visualViewport.addEventListener('scroll', repositionClose);
+    }
+
     function open(img){
       lastFocused = img;
       lbImg.src = img.currentSrc || img.src;
       lbImg.alt = img.alt || '';
       lb.classList.add('open');
       lockScroll();
+      repositionClose();
       focusNoScroll(closeBtn);
     }
     function close(){
       if(!lb.classList.contains('open')) return;
       lb.classList.remove('open');
+      closeBtn.style.top = ''; closeBtn.style.right = ''; closeBtn.style.left = '';
       unlockScroll();
       if(lastFocused){ focusNoScroll(lastFocused); }
     }
