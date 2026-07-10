@@ -299,6 +299,22 @@
   }
   .chip:hover{border-color:var(--accent);color:var(--accent);}
 
+  /* ---------- open source ---------- */
+  .oss{padding:0 0 clamp(48px,8vw,88px);}
+  .oss-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
+  @media(max-width:720px){.oss-grid{grid-template-columns:1fr;}}
+  .oss-item{
+    background:var(--bg-2);padding:clamp(20px,3vw,28px);
+    display:flex;flex-direction:column;align-items:flex-start;gap:.55rem;
+  }
+  .oss-item .oss-dates{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.12em;color:var(--faint);}
+  .oss-item h3{
+    margin:0;font-family:var(--font-display);font-weight:600;
+    font-size:1.05rem;letter-spacing:-.01em;
+  }
+  .oss-item p{margin:0 0 .45rem;color:var(--muted);font-size:.92rem;line-height:1.55;flex:1;}
+  .oss-item p b{color:var(--text);font-weight:500;}
+
   /* ---------- footer ---------- */
   footer{border-top:1px solid var(--line);padding:clamp(40px,6vw,72px) 0 clamp(40px,6vw,64px);}
   .foot-grid{display:flex;justify-content:space-between;align-items:flex-end;gap:2rem;flex-wrap:wrap;}
@@ -417,6 +433,7 @@
     <nav class="navlinks">
       <a href="#work">Work</a>
       <a href="#about" class="hide-sm">About</a>
+      <a href="#oss" class="hide-sm">Open source</a>
       <a href="#contact">Contact</a>
     </nav>
   </div>
@@ -704,6 +721,46 @@
         </div>
       </article>
 
+    </div>
+  </section>
+
+  <section class="oss" id="oss">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Open source</h2>
+        <span class="count">04 REPOS</span>
+      </div>
+      <div class="oss-grid">
+
+        <div class="oss-item reveal">
+          <span class="oss-dates">AUG 2022 &#8211; SEP 2023</span>
+          <h3>Lottie React Native</h3>
+          <p>Refactored the entire package to introduce support for <b>React Native&#8217;s New Architecture</b> &#8212; the animation library used across the RN ecosystem.</p>
+          <a class="chip" href="https://github.com/lottie-react-native/lottie-react-native" target="_blank" rel="noopener">GitHub &#8599;</a>
+        </div>
+
+        <div class="oss-item reveal">
+          <span class="oss-dates">2021 &#8211; 2024</span>
+          <h3>React Native (core)</h3>
+          <p>Contributions to <b>React Native core</b> in the native Android and iOS layers.</p>
+          <a class="chip" href="https://github.com/facebook/react-native" target="_blank" rel="noopener">GitHub &#8599;</a>
+        </div>
+
+        <div class="oss-item reveal">
+          <span class="oss-dates">AUG 2017 &#8211; JAN 2020</span>
+          <h3>hitogo</h3>
+          <p>Android in-app alert framework &#8212; built inside the O2 project and <b>open-sourced with Telef&#243;nica&#8217;s approval</b>.</p>
+          <a class="chip" href="https://github.com/AlexanderEggers/hitogo" target="_blank" rel="noopener">GitHub &#8599;</a>
+        </div>
+
+        <div class="oss-item reveal">
+          <span class="oss-dates">ONGOING</span>
+          <h3>OpenAPI Generator</h3>
+          <p>Recurring contributions to the <b>OpenAPI code-generation framework</b> for API clients and server stubs.</p>
+          <a class="chip" href="https://github.com/OpenAPITools/openapi-generator" target="_blank" rel="noopener">GitHub &#8599;</a>
+        </div>
+
+      </div>
     </div>
   </section>
 </main>
