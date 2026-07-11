@@ -217,14 +217,15 @@
 
   /* ---------- intro two-panel ---------- */
   .intro{padding:clamp(20px,5vw,44px) 0 clamp(40px,7vw,72px);}
-  .panels{
-    display:grid;grid-template-columns:1fr 1fr;gap:1px;
-    background:var(--line);
-    border:1px solid var(--line);
-    border-radius:14px;overflow:hidden;
+  .about-grid{
+    display:grid;grid-template-columns:1fr 1fr;
+    gap:clamp(24px,4vw,44px);align-items:start;
   }
-  @media(max-width:720px){.panels{grid-template-columns:1fr;}}
-  .panel{background:var(--bg-2);padding:clamp(22px,3.5vw,34px);}
+  @media(max-width:720px){.about-grid{grid-template-columns:1fr;gap:clamp(20px,5vw,32px);}}
+  .panel{
+    background:var(--bg-2);padding:clamp(22px,3.5vw,34px);
+    border:1px solid var(--line);border-radius:14px;
+  }
   .panel h3{
     font-family:var(--font-mono);
     font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;
@@ -232,6 +233,19 @@
   }
   .panel p{margin:0;color:var(--muted);}
   .panel p strong{color:var(--text);font-weight:500;}
+  .about-note{
+    margin:0;
+    padding:clamp(18px,2.6vw,26px) 0 0 clamp(16px,3vw,26px);
+    border-left:2px solid var(--accent);
+  }
+  @media(max-width:720px){.about-note{padding-top:0;}}
+  .about-note .note-kicker{
+    display:block;margin-bottom:.55rem;
+    font-family:var(--font-mono);font-size:.68rem;letter-spacing:.14em;
+    color:var(--accent);
+  }
+  .about-note p{margin:0;color:var(--muted);line-height:1.7;}
+  .about-note strong{color:var(--text);font-weight:500;}
 
   /* ---------- projects ---------- */
   .projects{padding:clamp(24px,5vw,48px) 0 clamp(48px,8vw,88px);}
@@ -466,7 +480,7 @@
       <div class="hero-grid">
       <div class="hero-text">
       <p class="eyebrow">Mobile Tech Lead · Melbourne, AU</p>
-      <h1>Mobile apps built for <span class="accent">speed, scale &amp; trust.</span></h1>
+      <h1>Platforms built for <span class="accent">speed, scale &amp; trust.</span></h1>
       <p class="lede">
         I lead mobile teams and architecture across <strong>native Android &amp; iOS</strong>,
         <strong>Kotlin Multiplatform</strong> and <strong>React Native</strong> — shipping to consumers,
@@ -513,18 +527,22 @@
   <section class="intro" id="about">
     <div class="wrap">
       <h2 class="vh">About</h2>
-      <div class="panels">
+      <div class="about-grid">
         <div class="panel">
-          <h3>What I bring</h3>
-          <p>Deep across the <strong>mobile stack</strong>, with working fluency in <strong>web, backend and hardware
-          integrations</strong>. I move fast in unfamiliar territory and bring the team with me — mentoring
-          engineers and aiming for the best possible result for the project and the company.</p>
+          <h3>Track record</h3>
+          <p>My work has been <strong>tested hands-on by Apple</strong> for their Australian retail
+          stores, shipped on <strong>Zoox&#8217;s autonomous vehicles</strong> at their 2021 global reveal, and
+          merged into <strong>React Native core</strong> and <strong>Lottie</strong> — alongside production
+          apps across Australia, the US and Europe.</p>
         </div>
-        <div class="panel">
-          <h3>Platforms &amp; reach</h3>
-          <p>Native <strong>Android &amp; iOS</strong>, <strong>Kotlin Multiplatform</strong> and
-          <strong>React Native</strong> apps in production across <strong>Australia, the US and Europe</strong>
-          — serving consumers, businesses and enterprise clients.</p>
+        <div class="about-note">
+        <span class="note-kicker">WHY I DO THIS</span>
+        <p>Why mobile? Because it&#8217;s the device that&#8217;s always with us — laptops, TVs
+      and cars each serve their one purpose, while mobile keeps finding new territory to dive into. The
+      problems I enjoy most are the unusual ones: <strong>jank-free animation on hardware that can barely
+      afford it</strong>, or <strong>encryption and background location sharing with little prior art to
+      lean on</strong>. And the team I want to run is one I can grow — engineers reaching their real
+      potential, communicating openly and well.</p>
         </div>
       </div>
     </div>
@@ -738,7 +756,7 @@
         <div class="oss-item reveal">
           <span class="oss-dates">2021 &#8211; 2024</span>
           <h3>React Native (core)</h3>
-          <p>Contributions to the <b>OpenAPI code-generation framework</b> for the Kotlin API client.</p>
+          <p>Contributions to <b>React Native core</b> in the native Android and iOS layers.</p>
           <div class="oss-links">
             <a class="chip" href="https://github.com/react/react-native" target="_blank" rel="noopener">Repo &#8599;</a>
             <a class="chip" href="https://github.com/react/react-native/pulls?q=is%3Apr+author%3AAlexanderEggers" target="_blank" rel="noopener">All my PRs &#8599;</a>
@@ -757,7 +775,7 @@
         <div class="oss-item reveal">
           <span class="oss-dates">2019 &#8211; 2020</span>
           <h3>OpenAPI Generator</h3>
-          <p>Contributions to the <b>OpenAPI code-generation framework</b> for API clients and server stubs.</p>
+          <p>Contributions to the <b>OpenAPI code-generation framework</b> for the Kotlin API client.</p>
           <div class="oss-links">
             <a class="chip" href="https://github.com/OpenAPITools/openapi-generator" target="_blank" rel="noopener">Repo &#8599;</a>
             <a class="chip" href="https://github.com/OpenAPITools/openapi-generator/pulls?q=is%3Apr+author%3AAlexanderEggers" target="_blank" rel="noopener">All my PRs &#8599;</a>
