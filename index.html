@@ -104,6 +104,9 @@
   }
 
   /* ---------- top bar ---------- */
+  /* sticky topbar overlays anchor targets; offset all in-page jumps below it */
+  [id]{scroll-margin-top:78px;}
+
   .topbar{
     position:sticky;top:0;z-index:20;
     background:rgba(13,16,20,.82);
@@ -305,6 +308,11 @@
   }
   .chip:hover{border-color:var(--accent);color:var(--accent);}
 
+  .also-line{
+    margin:0;padding-top:clamp(20px,3vw,32px);border-top:1px solid var(--line);
+    font-family:var(--font-mono);font-size:.68rem;letter-spacing:.12em;color:var(--faint);
+  }
+
   /* ---------- open source ---------- */
   .oss{padding:0 0 clamp(48px,8vw,88px);}
   .oss-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
@@ -319,6 +327,7 @@
     font-size:1.05rem;letter-spacing:-.01em;
   }
   .oss-item p{margin:0 0 .45rem;color:var(--muted);font-size:.92rem;line-height:1.55;flex:1;}
+  .oss-links{display:flex;gap:8px;flex-wrap:wrap;}
   .oss-item p b{color:var(--text);font-weight:500;}
 
   /* ---------- footer ---------- */
@@ -526,7 +535,7 @@
     <div class="wrap">
       <div class="sec-head">
         <h2>Selected work</h2>
-        <span class="count">07 PROJECTS</span>
+        <span class="count">06 PROJECTS · ORDERED BY IMPACT</span>
       </div>
 
       <!-- GEOSHARE -->
@@ -648,33 +657,6 @@
         </div>
       </article>
 
-      <!-- GUZMAN Y GOMEZ -->
-      <article class="project reveal">
-        <div class="p-meta">
-          <span class="p-sector">Food-tech</span>
-          <span class="p-dates">SEP – DEC 2022</span>
-          <span class="p-role"><b>Engineering Lead — Bilue</b><br>Technical focus</span>
-          <div class="p-stack">React Native · React<br>TypeScript<br>Kotlin · Swift</div>
-        </div>
-        <div class="p-body">
-          <h3>Guzman y Gomez</h3>
-          <p class="p-lead">Modernised a <b>high-traffic consumer ordering app</b>, bringing an established live
-          codebase up to current mobile standards.</p>
-          <ul class="p-list">
-            <li>Refactored the app, replacing outdated tooling and dependencies.</li>
-            <li>Brought the codebase in line with current <b>React Native, Android and iOS best practices</b>.</li>
-          </ul>
-          <div class="p-shots">
-            <div class="shot"><img src="assets/gyg-1.webp" alt="Guzman y Gomez app — food ordering menu" loading="lazy"></div>
-            <div class="shot"><img src="assets/gyg-2.webp" alt="Guzman y Gomez app — order checkout" loading="lazy"></div>
-          </div>
-          <div class="p-links">
-            <a class="chip" href="https://play.google.com/store/apps/details?id=com.gyg.gomex" target="_blank" rel="noopener">Google Play ↗</a>
-            <a class="chip" href="https://apps.apple.com/au/app/guzman-y-gomez-gyg-mexican/id595292048" target="_blank" rel="noopener">App Store ↗</a>
-          </div>
-        </div>
-      </article>
-
       <!-- GOVERNMENT -->
       <article class="project reveal">
         <div class="p-meta">
@@ -729,6 +711,7 @@
         </div>
       </article>
 
+      <p class="also-line reveal">ALSO: GUZMAN Y GOMEZ (ORDERING-APP MODERNISATION) · STATISTA · TRAFARI</p>
     </div>
   </section>
 
@@ -743,33 +726,47 @@
         <div class="oss-item reveal">
           <span class="oss-dates">AUG 2022 &#8211; SEP 2023</span>
           <h3>Lottie React Native</h3>
-          <p>Refactored the entire package to introduce support for <b>React Native&#8217;s New Architecture</b> &#8212; the animation library used across the RN ecosystem.</p>
-          <a class="chip" href="https://github.com/lottie-react-native/lottie-react-native" target="_blank" rel="noopener">GitHub &#8599;</a>
+          <p>Refactored the entire package to introduce support for <b>React Native&#8217;s New Architecture</b> &#8212; the RN ecosystem&#8217;s standard animation library (<b>1M+ weekly downloads</b>).</p>
+          <div class="oss-links">
+            <a class="chip" href="https://github.com/lottie-react-native/lottie-react-native" target="_blank" rel="noopener">Repo &#8599;</a>
+            <a class="chip" href="https://github.com/lottie-react-native/lottie-react-native/pulls?q=is%3Apr+author%3AAlexanderEggers" target="_blank" rel="noopener">All my PRs &#8599;</a>
+            <a class="chip" href="https://github.com/lottie-react-native/lottie-react-native/pull/910" target="_blank" rel="noopener">New Arch PR &#8599;</a>
+            <a class="chip" href="https://github.com/lottie-react-native/lottie-react-native/pull/878" target="_blank" rel="noopener">Refactor PR &#8599;</a>
+          </div>
         </div>
 
         <div class="oss-item reveal">
           <span class="oss-dates">2021 &#8211; 2024</span>
           <h3>React Native (core)</h3>
-          <p>Contributions to <b>React Native core</b> in the native Android and iOS layers.</p>
-          <a class="chip" href="https://github.com/facebook/react-native" target="_blank" rel="noopener">GitHub &#8599;</a>
+          <p>Contributions to the <b>OpenAPI code-generation framework</b> for the Kotlin API client.</p>
+          <div class="oss-links">
+            <a class="chip" href="https://github.com/react/react-native" target="_blank" rel="noopener">Repo &#8599;</a>
+            <a class="chip" href="https://github.com/react/react-native/pulls?q=is%3Apr+author%3AAlexanderEggers" target="_blank" rel="noopener">All my PRs &#8599;</a>
+            <a class="chip" href="https://github.com/react/react-native/pull/37758" target="_blank" rel="noopener">Xcode 15 PR &#8599;</a>
+            <a class="chip" href="https://github.com/react/react-native/pull/38127" target="_blank" rel="noopener">Android Deprecations PR &#8599;</a>
+          </div>
         </div>
 
         <div class="oss-item reveal">
           <span class="oss-dates">AUG 2017 &#8211; JAN 2020</span>
           <h3>hitogo</h3>
           <p>Android in-app alert framework &#8212; built inside the O2 project and <b>open-sourced with Telef&#243;nica&#8217;s approval</b>.</p>
-          <a class="chip" href="https://github.com/AlexanderEggers/hitogo" target="_blank" rel="noopener">GitHub &#8599;</a>
+          <a class="chip" href="https://github.com/AlexanderEggers/hitogo" target="_blank" rel="noopener">Repo &#8599;</a>
         </div>
 
         <div class="oss-item reveal">
-          <span class="oss-dates">ONGOING</span>
+          <span class="oss-dates">2019 &#8211; 2020</span>
           <h3>OpenAPI Generator</h3>
-          <p>Recurring contributions to the <b>OpenAPI code-generation framework</b> for the Kotlin and TypeScript API clients.</p>
-          <a class="chip" href="https://github.com/OpenAPITools/openapi-generator" target="_blank" rel="noopener">GitHub &#8599;</a>
+          <p>Contributions to the <b>OpenAPI code-generation framework</b> for API clients and server stubs.</p>
+          <div class="oss-links">
+            <a class="chip" href="https://github.com/OpenAPITools/openapi-generator" target="_blank" rel="noopener">Repo &#8599;</a>
+            <a class="chip" href="https://github.com/OpenAPITools/openapi-generator/pulls?q=is%3Apr+author%3AAlexanderEggers" target="_blank" rel="noopener">All my PRs &#8599;</a>
+            <a class="chip" href="https://github.com/OpenAPITools/openapi-generator/pull/4750" target="_blank" rel="noopener">Kotlin Date Converter PR &#8599;</a>
+            <a class="chip" href="https://github.com/OpenAPITools/openapi-generator/pull/5327" target="_blank" rel="noopener">Kotlin Enum Handling PR &#8599;</a>
+          </div>
         </div>
 
       </div>
-              </div>
     </div>
   </section>
 </main>
