@@ -127,6 +127,7 @@
   .brand .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);flex:none;}
   .bname{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .bsub{color:var(--faint);white-space:nowrap;}
+  @media(max-width:860px){.bsub{display:none;}} /* subtitle yields before the name ever truncates */
   .navlinks{display:flex;gap:.4rem;flex:0 0 auto;}
   .navlinks a{
     font-family:var(--font-mono);
@@ -137,7 +138,12 @@
     transition:color .18s,background .18s;
   }
   .navlinks a:hover{color:var(--text);background:var(--bg-2);}
-  @media(max-width:560px){.navlinks a.hide-sm{display:none;}}
+  @media(max-width:355px){.navlinks a.hide-sm{display:none;}}
+  .navlinks .lbl-short{display:none;}
+  @media(max-width:700px){
+    .navlinks .lbl-long{display:none;}
+    .navlinks .lbl-short{display:inline;}
+  }
 
   /* ---------- hero ---------- */
   .hero{padding:clamp(56px,11vw,120px) 0 clamp(40px,7vw,72px);}
@@ -362,7 +368,6 @@
   @media(max-width:600px){
     .topbar .wrap{height:56px;gap:.75rem;}
     .brand{font-size:.78rem;letter-spacing:.02em;}
-    .bsub{display:none;}
     .navlinks{gap:.15rem;}
     .navlinks a{padding:.45rem .55rem;}
 
@@ -383,9 +388,13 @@
     .f-contact a{flex-wrap:wrap;}
     .f-contact a .k{width:100%;}
   }
+  @media(max-width:480px){
+    .brand{font-size:.76rem;}
+    .navlinks a{font-size:.7rem;letter-spacing:.02em;padding:.45rem .4rem;}
+  }
   @media(max-width:380px){
-    .brand{font-size:.72rem;}
-    .navlinks a{font-size:.7rem;padding:.4rem .45rem;}
+    .brand{font-size:.7rem;}
+    .navlinks a{font-size:.66rem;letter-spacing:.01em;padding:.4rem .3rem;}
   }
 
   /* reveal + motion */
@@ -434,7 +443,7 @@
     <nav class="navlinks">
       <a href="#work">Work</a>
       <a href="#about" class="hide-sm">About</a>
-      <a href="#oss" class="hide-sm">Open source</a>
+      <a href="#oss"><span class="lbl-long">Open source</span><span class="lbl-short">OSS</span></a>
       <a href="#contact">Contact</a>
     </nav>
   </div>
